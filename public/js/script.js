@@ -5,9 +5,10 @@ const enableWebcamButton = document.getElementById('webcamButton')
 const disableWebcamButton = document.getElementById('webcamStopButton')
 const showPredictionButton = document.getElementById('showPredictionButton')
 const webcamCanvas = document.getElementById('webcamCanvas')
+const predictionList = document.getElementById("predictions")
 const faceCanvas = webcamCanvas.getContext('2d')
-const width = 640
-const height = 480
+const width = 400
+const height = 400
 
 // Store the resulting model in the global scope of our app.
 var modelFace
@@ -52,6 +53,12 @@ function resetEverything() {
 
   disableWebcamButton.classList.add('removed');
   disableWebcamButton.classList.remove('added');
+
+  showPredictionButton.classList.add('removed');
+  showPredictionButton.classList.remove('added');
+
+  predictionList.classList.add('removed');
+  predictionList.classList.remove('added');
 }
 
 // Enable the live webcam view and start classification.
@@ -64,7 +71,7 @@ function enableCam (event) {
   // getUsermedia parameters to force video but not audio.
   const constraints = {
     audio: false,
-    video: { width: 640, height: 480 }
+    video: { width: width, height: height }
   }
 
   // Activate the webcam stream.
@@ -85,6 +92,9 @@ function enableCam (event) {
 function startPrediction() {
   showPredictionButton.classList.add('added');
   showPredictionButton.classList.remove('removed');
+
+  predictionList.classList.add('added');
+  predictionList.classList.remove('removed'); 
 
   showPredictionButton.addEventListener('click', predictWebcam);
 }
@@ -132,21 +142,31 @@ function predictWebcam () {
       const result = modelExpression.predict(imageTensor)
       const predictedValue = result.arraySync()
 
-      const angry = 100 * predictedValue['0'][0] + '%'
-      const disgust = 100 * predictedValue['0'][1] + '%'
-      const fear = 100 * predictedValue['0'][2] + '%'
-      const happy = 100 * predictedValue['0'][3] + '%'
-      const sad = 100 * predictedValue['0'][4] + '%'
-      const surprise = 100 * predictedValue['0'][5] + '%'
-      const neutral = 100 * predictedValue['0'][6] + '%'
+      var expressions = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral'];
+      predictionList.innerHTML = '';
+      for(var i=0; i<7; i++) {
+        const expr = document.createElement("li");
+        const exprText = document.createTextNode(expressions[i] + ' : ' + (100 * predictedValue['0'][i]) + '%');
+        expr.appendChild(exprText);
 
-      console.log('angry: ' + angry)
-      console.log('disgust: ' + disgust)
-      console.log('fear: ' + fear)
-      console.log('happy: ' + happy)
-      console.log('sad: ' + sad)
-      console.log('surprise: ' + surprise)
-      console.log('neutral: ' + neutral)
+        predictionList.appendChild(expr);
+      }
+
+      // const angry = 100 * predictedValue['0'][0] + '%'
+      // const disgust = 100 * predictedValue['0'][1] + '%'
+      // const fear = 100 * predictedValue['0'][2] + '%'
+      // const happy = 100 * predictedValue['0'][3] + '%'
+      // const sad = 100 * predictedValue['0'][4] + '%'
+      // const surprise = 100 * predictedValue['0'][5] + '%'
+      // const neutral = 100 * predictedValue['0'][6] + '%'
+
+      // console.log('angry: ' + angry)
+      // console.log('disgust: ' + disgust)
+      // console.log('fear: ' + fear)
+      // console.log('happy: ' + happy)
+      // console.log('sad: ' + sad)
+      // console.log('surprise: ' + surprise)
+      // console.log('neutral: ' + neutral)
     }
   })
 

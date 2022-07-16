@@ -34,11 +34,8 @@ section {
     opacity: 0.2;
 }
 .camView {
-    position: relative;
-    float: left;
-    width: calc(100% - 20px);
-    margin: 10px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
     p {
         position: absolute;
         padding: 5px;
