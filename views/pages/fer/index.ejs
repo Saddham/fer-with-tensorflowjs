@@ -7,39 +7,38 @@
         <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
-      <div class="container-fluid" style="width: 800px; margin: 0 auto">
-        <h1>Expression detection using pre trained model in TensorFlow.js</h1>
+        <div class="container-fluid" style="width: 800px; margin: 0 auto">
+            <h1>Expression detection using pre trained model in TensorFlow.js</h1>
 
-        <p>
-            Wait for the model to load before clicking the button to enable the webcam - at which point it will become
-            visible to use.
-        </p>
-
-        <section id="demos" class="invisible">
             <p>
-                When ready click "enable webcam" below and accept access to the webcam when the browser asks (check the top left of your window)
+                Wait for the model to load before clicking the button to enable the webcam - at which point it will
+                become visible to use.
             </p>
 
-            <canvas id="webcamCanvas" width="400" height="400" style="margin: 0; display: none"
-                >Canvas not supported</canvas
-            >
-            <div id="liveView" class="camView">
-                <div>
-                    <div style="padding-bottom: 10px">
-                        <button id="webcamButton" class="btn added">Enable Webcam</button>
-                        <button id="webcamStopButton" class="btn removed">Stop Webcam</button>
-                        <button id="showPredictionButton" class="btn removed">Show Prediction</button>
+            <section id="demos" class="invisible">
+                <p>
+                    When ready click "enable webcam" below and accept access to the webcam when the browser asks (check
+                    the top left of your window)
+                </p>
+
+                <div id="liveView" class="camView">
+                    <div>
+                        <div style="padding-bottom: 10px">
+                            <button id="webcamButton" class="btn added">Enable Webcam</button>
+                            <button id="webcamStopButton" class="btn removed">Stop Webcam</button>
+                            <button id="showPredictionButton" class="btn removed">Show Prediction</button>
+                        </div>
+                        <div style="padding-bottom: 10px">
+                            <h3>Predictions:</h3>
+                            <ul id="predictions"></ul>
+                        </div>
                     </div>
-                    <div style="padding-bottom: 10px">
-                      <h3>Predictions:</h3>
-                      <ul id="predictions"></ul>
-                  </div>
+                    <div>
+                        <video id="webcam" autoplay muted width="200" height="200"></video>
+                        <canvas id="webcamCanvas" width="200" height="200" class="removed" style="padding-top:5px">Canvas not supported</canvas>
+                    </div>
                 </div>
-                <div>
-                  <video id="webcam" autoplay muted width="400" height="400"></video>
-                </div>
-            </div>
-        </section>
+            </section>
         </div>
 
         <!-- Import TensorFlow.js library -->

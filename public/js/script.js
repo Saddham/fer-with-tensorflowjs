@@ -7,8 +7,8 @@ const showPredictionButton = document.getElementById('showPredictionButton')
 const webcamCanvas = document.getElementById('webcamCanvas')
 const predictionList = document.getElementById("predictions")
 const faceCanvas = webcamCanvas.getContext('2d')
-const width = 400
-const height = 400
+const width = 200
+const height = 200
 
 // Store the resulting model in the global scope of our app.
 var modelFace
@@ -59,6 +59,9 @@ function resetEverything() {
 
   predictionList.classList.add('removed');
   predictionList.classList.remove('added');
+
+  webcamCanvas.classList.add('removed');
+  webcamCanvas.classList.remove('added');
 }
 
 // Enable the live webcam view and start classification.
@@ -113,6 +116,9 @@ function startPrediction() {
 // var children = [];
 
 function predictWebcam () {
+  webcamCanvas.classList.add('added');
+  webcamCanvas.classList.remove('removed');
+
   faceCanvas.drawImage(video, 0, 0, width, height)
   const frame = faceCanvas.getImageData(0, 0, width, height)
   // Now var's start classifying a frame in the stream.
